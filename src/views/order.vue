@@ -80,7 +80,7 @@
             <el-pagination
                 v-model:current-page="state.parameter.pageNum"
                 v-model:page-size="state.parameter.pageSize"
-                :page-sizes="[10, 20, 50, 100]"
+                :page-sizes="[10, 30, 50, 100, 500]"
                 background
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="state.total"
@@ -100,7 +100,7 @@ const state = reactive({
         address: '',
         orderType: '',
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 30,
         tokenIn: '',
         tokenOut: '',
         transHash: ''

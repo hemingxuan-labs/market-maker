@@ -21,7 +21,7 @@
         <el-table
             :data="state.tableData"
             style="max-width: calc(100% - 20px); height: calc(100vh - 240px)">
-            <el-table-column prop="id" label="id" width="50" />
+            <el-table-column prop="id" label="id" width="60" />
             <el-table-column label="address" show-overflow-tooltip min-width="120">
                 <template #default="scope">
                     <span style="cursor: pointer" @click="elTableColumns(scope.row.address)">{{
@@ -29,9 +29,20 @@
                     }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="createdTime" label="createdTime" min-width="130" />
-            <el-table-column prop="privateKey" label="privateKey" />
-            <el-table-column prop="seedPhrase" label="seedPhrase" />
+            <el-table-column label="privateKey" show-overflow-tooltip min-width="120">
+                <template #default="scope">
+                    <span style="cursor: pointer" @click="elTableColumns(scope.row.address)">{{
+                        scope.row.privateKey
+                    }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="seedPhrase" show-overflow-tooltip min-width="120">
+                <template #default="scope">
+                    <span style="cursor: pointer" @click="elTableColumns(scope.row.address)">{{
+                        scope.row.seedPhrase
+                    }}</span>
+                </template>
+            </el-table-column>
             <el-table-column label="status" min-width="70">
                 <template #default="scope">
                     <el-tag v-if="scope.row.status !== 'NORMAL'" type="danger" effect="dark">
@@ -42,8 +53,35 @@
                     </el-tag>
                 </template>
             </el-table-column>
-            <el-table-column prop="updateTime" label="updateTime" />
+            <el-table-column prop="createdTime" label="createdTime" min-width="136" />
+            <el-table-column prop="updateTime" label="updateTime" min-width="136" />
+            <el-table-column fixed="right" label="operate" width="76">
+                <template #default="scope">
+                    <el-button
+                        link
+                        type="primary"
+                        size="small"
+                        @click="walletDetile(scope.row.address)"
+                        >View</el-button
+                    >
+                </template>
+            </el-table-column>
         </el-table>
+        <el-dialog v-model="state.dialogTableVisible" title="Wallet token balance list">
+            <el-table :data="state.gridData">
+                <el-table-column property="token" label="token" width="150" />
+                <el-table-column label="address" show-overflow-tooltip min-width="120">
+                    <template #default="scope">
+                        <span style="cursor: pointer" @click="elTableColumns(scope.row.address)">{{
+                            scope.row.address
+                        }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column property="createdTime" label="createdTime" />
+                <el-table-column property="updateTime" label="updateTime" />
+                <el-table-column property="amount" label="amount" />
+            </el-table>
+        </el-dialog>
         <div
             style="
                 height: 50px;
@@ -55,7 +93,7 @@
             <el-pagination
                 v-model:current-page="state.parameter.pageNum"
                 v-model:page-size="state.parameter.pageSize"
-                :page-sizes="[10, 20, 50, 100]"
+                :page-sizes="[10, 30, 50, 100, 500]"
                 background
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="state.total"
@@ -67,7 +105,7 @@
 <script setup>
 import { reactive } from 'vue'
 import { Search } from '@element-plus/icons-vue'
-import { marketWalletPageList } from '@/api/index.js'
+import { marketWalletPageList, marketWalletBalanceList } from '@/api/index.js'
 import { copyMethod } from '@/utils/common.js'
 import { ElMessage } from 'element-plus'
 const state = reactive({
@@ -76,10 +114,12 @@ const state = reactive({
         createdTime: '',
         status: '',
         pageNum: 1,
-        pageSize: 10
+        pageSize: 30
     },
     tableData: [],
-    total: 0
+    total: 0,
+    dialogTableVisible: false,
+    gridData: []
 })
 const onmarketWalletPageList = async () => {
     const res = await marketWalletPageList(state.parameter)
@@ -107,6 +147,15 @@ const elTableColumns = (address) => {
             type: 'success'
         })
     })
+}
+const walletDetile = async (address) => {
+    if (address === '') return
+    const res = await marketWalletBalanceList({
+        address
+    })
+    state.gridData = res.result
+    state.dialogTableVisible = true
+    console.log(res, 'resresresres')
 }
 </script>
 <style lang="scss" scoped></style>

@@ -26,6 +26,11 @@ let routes = [
         name: 'swap',
         component: () => import('@/views/swap.vue')
     },
+    {
+        path: '/schedule-list',
+        name: 'schedule-list',
+        component: () => import('@/views/schedule-list.vue')
+    },
     { path: '/:pathMatch(.*)*', name: 'notfound', redirect: '/promotion' }
 ]
 const router = createRouter({

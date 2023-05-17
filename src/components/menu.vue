@@ -33,7 +33,13 @@ const menuList = [
             { title: 'Wallet', path: '/wallet' }
         ]
     },
-    { title: 'Swap', children: [{ title: 'Swap', path: '/swap' }] },
+    {
+        title: 'Swap',
+        children: [
+            { title: 'Swap', path: '/swap' },
+            { title: 'Schedule List', path: '/schedule-list' }
+        ]
+    },
     { title: 'Wallet', children: [] }
 ]
 const activeIndex = ref(route.path)

@@ -55,3 +55,35 @@ export const marketUniQuote = (data) => {
         data
     })
 }
+// 代币持有者列表
+export const marketWalletHoldList = (data) => {
+    return service({
+        url: `/market/wallet/hold/list`,
+        method: 'post',
+        data
+    })
+}
+// 钱包代币余额列表
+export const marketWalletBalanceList = (data) => {
+    return service({
+        url: `/market/wallet/balance/list`,
+        method: 'post',
+        data
+    })
+}
+// 批量订单列表
+export const marketOrderSwapList = (data) => {
+    return service({
+        url: `/market/order/swap/list`,
+        method: 'post',
+        data
+    })
+}
+// 普通订单列表-Ids
+export const marketOrderIdList = (data) => {
+    return service({
+        url: `/market/order/id/list`,
+        method: 'post',
+        data
+    })
+}

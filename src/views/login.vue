@@ -12,7 +12,7 @@
                 ),
                 rgb(255, 255, 255);
         ">
-        <el-card class="box-card" direction="vertical">
+        <el-card class="lonig-box-card" direction="vertical">
             <el-input v-model="username" placeholder="Username" />
             <el-input
                 style="margin-top: 10px"
@@ -50,7 +50,7 @@ const onMarketUserLogin = async () => {
 }
 </script>
 <style lang="scss" scoped>
-.box-card {
+.lonig-box-card {
     width: 500px;
     padding: 20px;
 }
